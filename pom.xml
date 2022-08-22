@@ -27,7 +27,26 @@
     </modules>
     
     <repositories>
-        
+    <repository>
+      <id>cloud-artifacts-snapshots</id>
+      <url> artifactregistry://europe-north1-maven.pkg.dev/fraggle-rock-artifacts/issuite-snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>cloud-artifacts-releases</id>
+      <url> artifactregistry://europe-north1-maven.pkg.dev/fraggle-rock-artifacts/issuite-releases</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>        
         <repository>
           <id>com.springsource.repository.bundles.release</id>
           <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
@@ -241,22 +260,25 @@
         </dependency>
 
     </dependencies>
-    <distributionManagement>
-        <repository>
-            <id>gc-spring-security-facelets-repository</id>
-            <name>Repository</name>
-            <url>file:../../repo</url>
-            <layout>default</layout>
-        </repository>
+  <distributionManagement>
+    <repository>
+      <id>releases</id>
+      <name>Internal releases repository</name>
+      <url> artifactregistry://europe-north1-maven.pkg.dev/fraggle-rock-artifacts/issuite-releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshots</id>
+      <name>Internal snapshots repository</name>
+      <url> artifactregistry://europe-north1-maven.pkg.dev/fraggle-rock-artifacts/issuite-snapshots</url> 
+    </snapshotRepository>
+  </distributionManagement>
 
-        <site>
-            <id>gc-spring-security-facelets-repository</id>
-            <name>Website</name>
-            <url>scp://86.111.32.114/var/www/www.dominikdorn.com/htdocs/facelets</url>
-        </site>
-
-    </distributionManagement>
-
+	<scm>
+		<url>https://github.com/cgi-no-utility/ischange</url>
+		<connection>scm:git:https://github.com/cgi-no-utility/ischange.git</connection>
+		<developerConnection>scm:git:https://github.com/cgi-no-utility/ischange.git</developerConnection>
+	<tag>HEAD</tag>
+	</scm>
 
     <properties>
 
@@ -299,8 +321,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
                     <encoding>UTF-8</encoding>                    
                 </configuration>
             </plugin>
@@ -338,6 +360,13 @@
 			</plugin>
 
         </plugins>
+    <extensions>
+      <extension>
+        <groupId>com.google.cloud.artifactregistry</groupId>
+        <artifactId>artifactregistry-maven-wagon</artifactId>
+        <version>2.1.4</version>
+      </extension>
+    </extensions>        
     </build>
 
 
